@@ -1,8 +1,16 @@
+#!/usr/bin/env python
 from flask import Flask, request, redirect, send_file
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 import validators
 from api import Fetch
 
 app = Flask(__name__)
+
+limiter = Limiter(
+    app,
+    key_func=get_remote_address
+)
 
 
 def make_m3u8(output, query):
@@ -64,11 +72,17 @@ def query_hanlder(args, api):
             return api_formated(message, api)
 
         quality = args.get("quality")
+<<<<<<< HEAD
         stream_obj = Fetch(query, quality).filtered_streams()
         try:
             return api_formated(stream_obj, api, query)
         except TypeError:
             return stream_obj
+=======
+        stream_obj = Fetch(query, quality)
+        streams = stream_obj.filtered_streams()
+        return api_formated(streams, api, query)
+>>>>>>> 8404bd861c94c828ff67ba64164dcda46d62fcb4
     else:
         message = "No queries provided. Nothing to do."
         return api_formated(message, api)
@@ -80,6 +94,8 @@ def index():
 
 
 @app.route("/iptv-query")
+@limiter.limit("30 per minute")
+@limiter.limit("1 per second")
 def home():
     response = query_hanlder(request.args, False)
     if response.startswith("#EXTM3U"):
@@ -87,10 +103,11 @@ def home():
     elif response.startswith("http"):
         return redirect(response)
     else:
-        return response
-
+        return response  
 
 @app.route("/api")
+@limiter.limit("30 per minute")
+@limiter.limit("1 per second")
 def api():
     return query_hanlder(request.args, True)
 
