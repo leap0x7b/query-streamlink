@@ -65,7 +65,10 @@ def query_hanlder(args, api):
 
         quality = args.get("quality")
         stream_obj = Fetch(query, quality).filtered_streams()
-        return api_formated(stream_obj, api, query)
+        try:
+            return api_formated(stream_obj, api, query)
+        except TypeError:
+            return stream_obj
     else:
         message = "No queries provided. Nothing to do."
         return api_formated(message, api)
