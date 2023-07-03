@@ -1,16 +1,16 @@
 #!/usr/bin/env python
 from flask import Flask, request, redirect, send_file
-from flask_limiter import Limiter
-from flask_limiter.util import get_remote_address
+#from flask_limiter import Limiter
+#from flask_limiter.util import get_remote_address
 import validators
 from api import Fetch
 
 app = Flask(__name__)
 
-limiter = Limiter(
-    app,
-    key_func=get_remote_address
-)
+#limiter = Limiter(
+#    app,
+#    key_func=get_remote_address
+#)
 
 
 def make_m3u8(output, query):
@@ -88,8 +88,8 @@ def index():
 
 
 @app.route("/iptv-query")
-@limiter.limit("30 per minute")
-@limiter.limit("1 per second")
+#@limiter.limit("30 per minute")
+#@limiter.limit("1 per second")
 def home():
     response = query_hanlder(request.args, False)
     if response.startswith("#EXTM3U"):
@@ -100,8 +100,8 @@ def home():
         return response  
 
 @app.route("/api")
-@limiter.limit("30 per minute")
-@limiter.limit("1 per second")
+#@limiter.limit("30 per minute")
+#@limiter.limit("1 per second")
 def api():
     return query_hanlder(request.args, True)
 
