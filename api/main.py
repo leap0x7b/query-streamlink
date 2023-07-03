@@ -72,17 +72,11 @@ def query_hanlder(args, api):
             return api_formated(message, api)
 
         quality = args.get("quality")
-<<<<<<< HEAD
         stream_obj = Fetch(query, quality).filtered_streams()
         try:
             return api_formated(stream_obj, api, query)
         except TypeError:
             return stream_obj
-=======
-        stream_obj = Fetch(query, quality)
-        streams = stream_obj.filtered_streams()
-        return api_formated(streams, api, query)
->>>>>>> 8404bd861c94c828ff67ba64164dcda46d62fcb4
     else:
         message = "No queries provided. Nothing to do."
         return api_formated(message, api)
