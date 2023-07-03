@@ -1,8 +1,5 @@
 import streamlink
-<<<<<<< HEAD
 import traceback
-=======
->>>>>>> 8404bd861c94c828ff67ba64164dcda46d62fcb4
 from streamlink import (
     StreamError,
     StreamlinkError,
@@ -10,10 +7,6 @@ from streamlink import (
     NoPluginError,
     NoStreamsError,
 )
-<<<<<<< HEAD
-=======
-
->>>>>>> 8404bd861c94c828ff67ba64164dcda46d62fcb4
 
 class Fetch:
     """
@@ -40,27 +33,10 @@ class Fetch:
             links = streamlink.streams(self.query)
             res = list(links.keys())
             return (links, res)
-<<<<<<< HEAD
         except Exception as e:
             print('got error at getstreams')
             print(traceback.format_exec())
             return e
-
-    def filtered_streams(self):
-        stream = self.get_streams()
-        print(stream)
-        try:
-            streams, resolutions = stream
-            if not streams:
-                raise ValueError
-            res_str = ",".join(resolutions)
-        except (ValueError, TypeError):
-            print('got error at filtered')
-            return stream
-=======
-        except Exception:
-            # returnes exceptions raised by streamlink
-            raise
 
     def filtered_streams(self):
         """
@@ -80,7 +56,6 @@ class Fetch:
             return f"Could not get the link, Streamlink couldn't read {self.query}"
         except TypeError:
             return payload
->>>>>>> 8404bd861c94c828ff67ba64164dcda46d62fcb4
 
         # TODO: find a more elegant solution to deal with 'best' and 'worst'
         if "best" in self.qualities:
