@@ -2,7 +2,7 @@
 A Python webapp that is destined to spit out links given by all sources supported by Streamlink.
 
 ## How it works :
-
+ 
 This program works by asking Streamlink, based on the base URL you're giving him, a streamable URL.
 
 ## Different queries available :
